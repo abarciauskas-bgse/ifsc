@@ -1,0 +1,20 @@
+CREATE TABLE comp_results (
+    id              integer NOT NULL PRIMARY KEY,
+    comp_id         integer NOT NULL,
+    comp_stage      varchar(100) NOT NULL,
+    comp_stage_rank integer NOT NULL,
+    athelete_id     integer NOT NULL,
+    previous_heat   integer NOT NULL,
+    tops            integer NOT NULL,
+    top_tries       integer NOT NULL,
+    bonuses         integer NOT NULL,
+    bonus_tries     integer NOT NULL,
+    boulder_1_top_tries integer NOT NULL,
+    boulder_1_bonus_tries integer NOT NULL,
+    boulder_2_top_tries integer NOT NULL,
+    boulder_2_bonus_tries integer NOT NULL,
+    boulder_3_top_tries integer NOT NULL,
+    boulder_3_bonus_tries integer NOT NULL,
+    boulder_4_top_tries integer NOT NULL,
+    boulder_4_bonus_tries integer NOT NULL
+);
