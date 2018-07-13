@@ -1,11 +1,10 @@
 from bs4 import BeautifulSoup
-from selenium import webdriver
 import helpers
 
 # for chrome driver: export PATH=$PATH:~/Projects/ifsc/
 base_url = 'http://www.ifsc-climbing.org/index.php?option=com_ifsc&view=athlete&id='
-athlete_id_start = 9237
-athlete_id_end = 9240
+athlete_id_start = 122
+athlete_id_end = 57114
 
 def generate_athlete_data(athlete_id):
   url = '{0}{1}'.format(base_url, athlete_id)
@@ -26,6 +25,11 @@ def generate_athlete_data(athlete_id):
     athlete_data.update({attr: value})
   return athlete_data
 
-for athlete_id in range(athlete_id_start, athlete_id_end):
-  data = generate_athlete_data(athlete_id)
-  helpers.insert_row('athletes', data)
+def insert_athlete_row(athlete_id):
+  try:
+    data = generate_athlete_data(athlete_id)
+    helpers.insert_row('athletes', data)
+  except Exception as e:
+    print('Caught exception: {0}'.format(e))
+
+helpers.parallelize(insert_athlete_row, range(athlete_id_start, athlete_id_end))

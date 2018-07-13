@@ -9,12 +9,12 @@ CREATE TABLE comp_results (
     top_tries       integer NOT NULL,
     bonuses         integer NOT NULL,
     bonus_tries     integer NOT NULL,
-    boulder_1_top_tries integer NOT NULL,
-    boulder_1_bonus_tries integer NOT NULL,
-    boulder_2_top_tries integer NOT NULL,
-    boulder_2_bonus_tries integer NOT NULL,
-    boulder_3_top_tries integer NOT NULL,
-    boulder_3_bonus_tries integer NOT NULL,
-    boulder_4_top_tries integer NOT NULL,
-    boulder_4_bonus_tries integer NOT NULL
+    boulder_1_top_tries integer,
+    boulder_1_bonus_tries integer,
+    boulder_2_top_tries integer,
+    boulder_2_bonus_tries integer,
+    boulder_3_top_tries integer,
+    boulder_3_bonus_tries integer,
+    boulder_4_top_tries integer,
+    boulder_4_bonus_tries integer
 );

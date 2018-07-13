@@ -1,14 +1,6 @@
-import re
 import helpers
-
-first_year = 2000
-last_year = 2018
-
-# NOTE: Just world cups
-comp_base_url = 'http://www.ifsc-climbing.org/index.php/world-competition#!year=2016&filter[cat_id]=69&filter[cup]=!'
-
-soup = helpers.fetch_page(comp_base_url)
-competitions = soup.find(id='ifsc_calendar').findAll('div', {'class': 'competition'})
+import re
+import sys
 
 def generate_comp_data(competition_html):
   competition_rel_link = competition_html.find('a')['href']
@@ -30,6 +22,23 @@ def generate_comp_data(competition_html):
     'month_day': month_day
   }  
 
-for idx, competition_html in enumerate(competitions[1:2]):
-  data = generate_comp_data(competition_html)
-  helpers.insert_row('comps', data)
+def comps_for_year(year):
+  # NOTE: Just world cups
+  comp_base_url = """
+    http://www.ifsc-climbing.org/index.php/world-competition#!year=
+    {0}&filter[cat_id]=69&filter[cup]=!
+    """.format(year)
+  soup = helpers.fetch_page(comp_base_url)
+  competitions = soup.find(id='ifsc_calendar').findAll('div', {'class': 'competition'})
+
+  for competition_html in competitions:
+    data = generate_comp_data(competition_html)
+    print('inserting competition {0} for year {1}'.format(data['id'], data['year']))
+    helpers.insert_row('comps', data)
+
+# Loop through each year of interest. Fetch world cups competition list page and
+# store each comp.
+def get_all_comps(start_year, end_year):
+  helpers.parallelize(comps_for_year, range(start_year, end_year))
+
+get_all_comps(2006, 2018)
