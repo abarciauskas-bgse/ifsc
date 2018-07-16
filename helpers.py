@@ -15,7 +15,7 @@ def fetch_all(columns, table, where):
     query = '{0} where {1}'.format(query, where)
   cursor.execute(query)
   rows = cursor.fetchall()
-  return list(map(lambda row: row[0], rows))
+  return rows
 
 def fetch_page(url):
   options = webdriver.ChromeOptions()

@@ -98,6 +98,7 @@ def fetch_all_comp_results():
   # 2007 had bonuses 
   # it changed again in 2018 to zones
   comp_ids = helpers.fetch_all('id', 'comps', 'year >= 2007')
+  comp_ids = list(map(lambda row: row[0], comp_ids))
   print('ids: {0}'.format(comp_ids))
   helpers.parallelize(fetch_comp_results, comp_ids)
 
