@@ -2,13 +2,14 @@ import helpers
 import json
 
 def generate_results_data(idx, result, comp_id, comp_stage, category):
-  athelete_id = int(result['id'])
+  athlete_id = int(result['id'])
   comp_result_data = {
-    'id': int('{0}{1}{2}'.format(comp_id, stage_to_route[comp_stage], athelete_id)),
+    'id': int('{0}{1}{2}'.format(comp_id, stage_to_route[comp_stage], athlete_id)),
+    'category': category,
     'comp_id': comp_id,
     'comp_stage': comp_stage,
     'comp_stage_rank': idx + 1,
-    'athelete_id': athelete_id,
+    'athlete_id': athlete_id,
     'previous_heat': int(result.find('td', {'class': 'rank_prev_heat'}).get_text())
   }
   if categories[category] in [5, 6]:
@@ -63,7 +64,7 @@ def fetch_comp_results(comp_id):
             data = generate_results_data(idx, result, comp_id, comp_stage, category)
             print(
               'Inserting result for competition {0}, stage {1}, athelete {2}'
-                  .format(data['comp_id'], data['comp_stage'], data['athelete_id'])
+                  .format(data['comp_id'], data['comp_stage'], data['athlete_id'])
             )
             helpers.insert_row('comp_results', data)
   except Exception as e:

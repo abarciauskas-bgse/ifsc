@@ -27,8 +27,9 @@ def generate_athlete_data(athlete_id):
 
 def insert_athlete_row(athlete_id):
   try:
-    data = generate_athlete_data(athlete_id)
-    helpers.insert_row('athletes', data)
+    if len(helpers.fetch_all('id', 'athletes', 'id = {0}'.format(athlete_id))) == 0:
+      data = generate_athlete_data(athlete_id)
+      helpers.insert_row('athletes', data)
   except Exception as e:
     print('Caught exception: {0}'.format(e))
 
