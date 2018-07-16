@@ -5,6 +5,7 @@ sys.path.append('/Users/aimeebarciauskas/Library/Python/3.6/lib/python/site-pack
 from selenium import webdriver
 import psycopg2
 from psycopg2.extensions import AsIs
+import traceback
 
 def fetch_all(columns, table, where):
   conn = psycopg2.connect('dbname=ifsc')

@@ -1,11 +1,11 @@
-CREATE TABLE comp_results (
-    id              integer NOT NULL PRIMARY KEY,
+CREATE TABLE bouldering_comp_results (
+    id              bigint NOT NULL PRIMARY KEY,
     category        varchar(100) NOT NULL,
     comp_id         integer NOT NULL,
     comp_stage      varchar(100) NOT NULL,
     comp_stage_rank integer NOT NULL,
     athlete_id      integer NOT NULL,
-    previous_heat   integer NOT NULL,
+    previous_heat   integer,
     tops            integer NOT NULL,
     top_tries       integer NOT NULL,
     bonuses         integer NOT NULL,
