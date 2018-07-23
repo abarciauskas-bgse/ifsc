@@ -6,6 +6,8 @@ from selenium import webdriver
 import psycopg2
 from psycopg2.extensions import AsIs
 import traceback
+from scipy import stats
+import numpy as np
 
 def fetch_all(columns, table, where):
   conn = psycopg2.connect('dbname=ifsc')
@@ -16,6 +18,9 @@ def fetch_all(columns, table, where):
   cursor.execute(query)
   rows = cursor.fetchall()
   return rows
+
+def format_rows(rows):
+    return list(map(lambda row: row[0], rows))
 
 def fetch_page(url):
   options = webdriver.ChromeOptions()
@@ -65,3 +70,18 @@ month_indices = {
   'November': 11,
   'December': 12
 }
+
+def run_tests(x, y, test=stats.ttest_ind, sample_size=25, ntests=10000):
+    pvalues = []
+    iter_idx = 0
+    while iter_idx <= ntests:
+        # Sample populations
+        random_sample_x = np.random.choice(x, size=sample_size)
+        random_sample_y = np.random.choice(y, size=sample_size)
+        #tstat = tstat(random_sample_firsts, random_sample_all, N)
+        #pvalue = pvalue(tstat, N)
+        # Can sanity check above values with stats.ttest_ind
+        t2, p2 = test(random_sample_x, random_sample_y)
+        pvalues.append(p2)
+        iter_idx += 1
+    return pvalues
