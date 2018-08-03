@@ -19,6 +19,13 @@ def fetch_all(columns, table, where):
   rows = cursor.fetchall()
   return rows
 
+def raw_fetch(query):
+    conn = psycopg2.connect('dbname=ifsc')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    return rows
+
 def format_rows(rows):
     return list(map(lambda row: row[0], rows))
 
